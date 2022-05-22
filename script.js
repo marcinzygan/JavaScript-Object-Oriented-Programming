@@ -582,11 +582,11 @@ class EVCl extends CarCl {
     chargeBattery(value){
         this.#charge = value
         console.log(`Current charge is  ${this.#charge} %`);
-        
+        return this;
     }
 }
 
 const Rivian = new EVCl("Rivian" , 120 , 23)
 Rivian.chargeBattery(90)
-Rivian.accelerate().break().accelerate().accelerate()
+Rivian.accelerate().break().accelerate().accelerate().chargeBattery(90)
 console.log(Rivian);
