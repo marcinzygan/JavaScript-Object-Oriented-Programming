@@ -284,44 +284,309 @@ GOOD LUCK 😀
 */
 
 
-const Car = function(make , speed){
-this.make = make ;
-this.speed = speed;
-}
-//Methods
-Car.prototype.accelerate = function(){
-    this.speed += 10
-        console.log(`Going ${this.speed} km/h`);
-}
-Car.prototype.break = function(){
-    this.speed -= 5
-        console.log(`Going ${this.speed} km/h`);
-}
+// const Car = function(make , speed){
+// this.make = make ;
+// this.speed = speed;
+// }
+// //Methods
+// Car.prototype.accelerate = function(){
+//     this.speed += 10
+//         console.log(`Going ${this.speed} km/h`);
+// }
+// Car.prototype.break = function(){
+//     this.speed -= 5
+//         console.log(`Going ${this.speed} km/h`);
+// }
 
-const EV = function(make , speed ,charge){
-Car.call(this, make , speed);
-this.charge = charge
-}
+// const EV = function(make , speed ,charge){
+// Car.call(this, make , speed);
+// this.charge = charge
+// }
 
-EV.prototype = Object.create(Car.prototype)
+// EV.prototype = Object.create(Car.prototype)
 
-EV.prototype.chargeBattery = function(chargeTo){
-    this.charge = chargeTo
-}
-EV.prototype.accelerate = function(){
-    this.speed += 20
-    this.charge -= 1
-    console.log(`Tesla is going ${this.speed } km/h with a charge ${this.charge} %`);
+// EV.prototype.chargeBattery = function(chargeTo){
+//     this.charge = chargeTo
+// }
+// EV.prototype.accelerate = function(){
+//     this.speed += 20
+//     this.charge -= 1
+//     console.log(`Tesla is going ${this.speed } km/h with a charge ${this.charge} %`);
     
+// }
+// const tesla =  new EV("Tesla" , 120 , 23);
+// console.log(tesla);
+
+
+// tesla.accelerate()
+// tesla.accelerate()
+// tesla.chargeBattery(50)
+// tesla.accelerate()
+// tesla.break()
+// tesla.chargeBattery(90)
+// tesla.accelerate()
+
+
+///////// INHERITANCE USING ES6 CLASSES
+
+// class PersonCl {
+// constructor(firstName , birthYear){
+// this.firstName = firstName
+// this.birthYear = birthYear
+// }
+// // Method will be added to .prototype // 
+// // write the methods in class object not in constructor 
+// calcAge(){
+//     console.log(2045 - this.birthYear);
+    
+// }
+//    introduce = function(){
+//     console.log(`My name is ${this.firstName} and I study ${this.course}`);
+    
+// }
+// }
+
+
+// class StudentCl extends PersonCl {
+//     constructor(firstName , birthYear , course){
+//     // super is a costructor of parent class PersonCl
+//     //Always needs to happend first , because it will set this keyword for StudentCl
+//     super(firstName , birthYear);
+//     this.course = course
+// }
+
+// }
+
+// const martha = new StudentCl("Martha", 2022 , "computer science")
+
+// console.log(martha);
+// martha.introduce()
+// martha.calcAge()
+
+
+//////// INHERITANCE Object . create //////////////////////////
+
+// const PersonProto = {
+//     calcAge(){
+//         console.log(2045 - this.birthYear);
+        
+//     },
+//     init(firstName ,birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//     }
+// }
+// const steven = Object.create(PersonProto)
+// const StudentProto = Object.create(PersonProto)
+
+// StudentProto.init = function (firstName , birthYear , course){
+//     PersonProto.init.call(this , firstName , birthYear , this.course = course)
+// }
+// StudentProto.introduce= function(){
+//     console.log(`My name is ${this.firstName} and I study ${this.course}`);
+    
+// }
+// const jay = Object.create(StudentProto)
+
+
+// jay.init("jay" , 2011 , "cooking")
+// console.log(jay);
+// jay.introduce()
+
+//////////// ES6 CLASSES CD.... ////////////////
+
+// class Account {
+//     constructor(owner , currency , pin ){
+//         this.owner = owner;
+//         this.currency = currency;
+        
+//         // We can set other properties
+
+//         //Protected property add _ as a convenction
+//         this._movements = [];
+//         this.pin = _pin;
+//         this.locale = navigator.language
+//         // we can create message in constructor too 
+//         console.log(`Thank You for opening an account ${owner}`);
+        
+
+//     }
+//     // Public interface 
+//     getMovemens(){
+//         return this._movements
+//     }
+//     deposit(value){
+//         this._movements.push(value)
+//     }
+//     // We can call other function inside with this keyword
+//     withdraw(value){
+//         this.deposit( - value)
+//     }
+
+//     _approveLoan(value){
+//         return true ;
+//     }
+
+
+//     requestLoan(value){
+//         if(this._approveLoan(value)){
+//             this.deposit(value);
+//             console.log(`Loan approved for ${value}`);
+            
+//         }
+//     }
+
+// }   
+
+
+// const acc1 = new Account("Marcin", "PLN" , 123)
+
+// acc1.deposit(2000);
+// acc1.withdraw(500)
+// console.log(acc1);
+// acc1.requestLoan(5000)
+
+//////// DATA PRIVACY /////////
+
+////class fields not YET SUPPORTED !!!! ////
+
+// 1 PUBLIC FIELDS
+// 2 PRIVATE FIELDS
+// 3 PUBLIC METHODS
+// 4 PRIVATE METHODS
+
+// class Account {
+//     // 1 public field added on instances not to prototype 
+//     locale = navigator.language;
+    
+//     // 2 private fields add # we need to change that in our code aswell
+//     #movements = [];
+//     #pin;
+
+
+//     constructor(owner , currency , pin ){
+//         this.owner = owner;
+//         this.currency = currency;
+        
+//         // Private property first we need to define it outside of constructor and then set it to pin
+//         this.#pin = pin;
+//         // this.locale = navigator.language
+//         // we can create message in constructor too 
+//         console.log(`Thank You for opening an account ${owner}`);
+        
+
+//     }
+//     //3 PUBLIC METHODS not changing 
+//     // Public interface 
+//     getMovemens(){
+//         return this.#movements
+//     }
+//     deposit(value){
+//         this.#movements.push(value)
+//         //for chaining return this
+//         return this;
+//     }
+//     // We can call other function inside with this keyword
+//     withdraw(value){
+//         this.deposit( - value)
+//         //for chaining return this
+//         return this;
+//     }
+
+   
+
+
+//     requestLoan(value){
+//         if(this.#approveLoan(value)){
+//             this.deposit(value);
+//             console.log(`Loan approved for ${value}`);
+//             //for chaining return this
+//         return this;
+//         }
+//     }
+//     //4 PRIVATE METHODS
+//     #approveLoan(value){
+//         return true ;
+//     }
+//     // Static methods works only on class itself (Account class)
+//     static helper(){
+//         console.log("helper");
+        
+//     }
+// }   
+// const acc1 = new Account("Marcin", "PLN" , 123)
+
+// acc1.deposit(5000)
+// acc1.requestLoan(5000)
+// console.log(acc1);
+// // acc1.#movements.push(2000)  not accesible as it is private !
+// Account.helper()
+
+
+// //CHAINING METHODS
+// // return this in methods first 
+// acc1.deposit(400).deposit(500).withdraw(800).requestLoan(50000)
+// console.log(acc1);
+
+
+/// CHALLENGE 4
+/* 
+1. Re-create challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+2. Make the 'charge' property private;
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. They experiment with chining!
+
+DATA CAR 1: 'Rivian' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+class CarCl {
+    constructor(make , speed){
+        this.make = make;
+        this.speed = speed;
+    }
+    accelerate(){
+        this.speed += 10
+        console.log(`Going ${this.speed} km/h`);
+        
+    }
+    break(){
+        this.speed -= 5
+        console.log(`Going ${this.speed} km/h`);
+        return this
+    }
+    get speedUS() {
+        return  this.speed / 1.6
+       
+    }
+    set speedUS(speed){
+        this.speed = speed  * 1.6
+       
+    }
 }
-const tesla =  new EV("Tesla" , 120 , 23);
-console.log(tesla);
+
+class EVCl extends CarCl {
+    #charge;
+    constructor(make , speed , charge){
+        super(make , speed);
+        this.#charge = charge
+    }
 
 
-tesla.accelerate()
-tesla.accelerate()
-tesla.chargeBattery(50)
-tesla.accelerate()
-tesla.break()
-tesla.chargeBattery(90)
-tesla.accelerate()
+    accelerate(){
+        this.speed += 20
+        this.#charge -= 1
+        console.log(`Going ${this.speed} km/h with the charge ${this.#charge} %`);
+        return this;
+    }
+    chargeBattery(value){
+        this.#charge = value
+        console.log(`Current charge is  ${this.#charge} %`);
+        
+    }
+}
+
+const Rivian = new EVCl("Rivian" , 120 , 23)
+Rivian.chargeBattery(90)
+Rivian.accelerate().break().accelerate().accelerate()
+console.log(Rivian);
